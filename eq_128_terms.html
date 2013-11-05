@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>jsEO Testing: Equation with 128 terms.</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <!--Including CSS -->
+        <link rel="stylesheet" type="text/css" href="./css/jsEO.css">
+
+        <!-- Including Google's JS API -->
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+        <!-- Including mootools -->
+        <script src="./js/libs/mootools/mootools-core-full-compat.js"></script>
+
+        <!-- Including jsEO core -->
+        <script src="./js/libs/jsEO/core/jsEOUtils.js"></script>
+        <script src="./js/libs/jsEO/core/jsEO.js"></script>
+        <script src="./js/libs/jsEO/core/jsEOIndividual.js"></script>
+        <script src="./js/libs/jsEO/core/jsEOPopulation.js"></script>
+        <script src="./js/libs/jsEO/core/jsEOOperator.js"></script>
+        <script src="./js/libs/jsEO/core/jsEOOperatorsWheel.js"></script>
+        <script src="./js/libs/jsEO/core/jsEOAlgorithm.js"></script>
+
+        <!-- Including type of algorithms -->
+        <script src="./js/libs/jsEO/core/algorithms/jsEOGA.js"></script>
+
+        <!-- Including operator/s to select indviduals for new population -->
+        <script src="./js/libs/jsEO/core/operators/jsEOOpSelectorTournament.js"></script>
+
+        <!-- Including operator/s to synchronize with others islands -->
+        <script src="./js/libs/jsEO/core/operators/jsEOOpSendIndividuals.js"></script>
+        <script src="./js/libs/jsEO/core/operators/jsEOOpGetIndividuals.js"></script>
+
+        <!-- Including jsEOFloatVector elements -->
+        <script src="./js/libs/jsEO/jsEOFloatVector/jsEOFVIndividual.js"></script>
+        <script src="./js/libs/jsEO/jsEOFloatVector/jsEOFVOpMutation.js"></script>
+        <script src="./js/libs/jsEO/jsEOFloatVector/jsEOFVOpCrossOver.js"></script>
+        <script src="./js/libs/jsEO/jsEOFloatVector/jsEOFVGA.js"></script>
+
+        <!-- Including main vector of float program -->        
+        <script src="./js/samples/eq_128_terms_problem.js"></script>
+    </head>
+    <body>
+        <h1>jsEO testing problem</h1>
+        <div id="jsEODescription">
+            <h2>128 terms' equation!</h2>
+            <h4>By <a href="http://vrivas.es" target="_blank">Victor M. Rivas</a>,
+            from <a href="http://geneura.wordpress.com" target="_blank">Geneura Team</a></h4>
+        
+
+            <p class='english'>Thanks for helping us to test jsEO library.</p>
+            <p class='english'>We are trying to solve the following equation:</p>
+            <p style='margin: 2em; font-style: italic;'>
+                (x<sub>0</sub> -7.156) + (x<sub>1</sub> +2.229) +
+                (x<sub>2</sub> -5.535) + (x<sub>3</sub> -4.618) + 
+                (x<sub>4</sub> +6.902) + (x<sub>5</sub> -3.912) + 
+                (x<sub>6</sub> +7.246) + (x<sub>7</sub> -9.204) + 
+                (x<sub>8</sub> +8.919) + (x<sub>9</sub> +5.979) + 
+                (x<sub>10</sub> +9.348) + (x<sub>11</sub> +9.444) + 
+                (x<sub>12</sub> +8.353) + (x<sub>13</sub> +5.018) + 
+                (x<sub>14</sub> +4.606) + (x<sub>15</sub> +0.961) + 
+                (x<sub>16</sub> +7.225) + (x<sub>17</sub> +1.903) + 
+                (x<sub>18</sub> +1.452) + (x<sub>19</sub> -5.583) + 
+                (x<sub>20</sub> -9.210) + (x<sub>21</sub> +4.003) + (x<sub>22</sub> -2.308) + (x<sub>23</sub> -9.555) + (x<sub>24</sub> +5.903) + (x<sub>25</sub> -3.676) + (x<sub>26</sub> -9.837) + (x<sub>27</sub> -5.272) + (x<sub>28</sub> +3.882) + (x<sub>29</sub> -5.365) + (x<sub>30</sub> +8.509) + (x<sub>31</sub> -8.524) + (x<sub>32</sub> +5.927) + (x<sub>33</sub> -5.617) + (x<sub>34</sub> +8.877) + (x<sub>35</sub> +6.647) + (x<sub>36</sub> +6.081) + (x<sub>37</sub> +0.921) + (x<sub>38</sub> +5.566) + (x<sub>39</sub> -7.609) + (x<sub>40</sub> -0.804) + (x<sub>41</sub> -8.849) + (x<sub>42</sub> +6.493) + (x<sub>43</sub> -3.435) + (x<sub>44</sub> +9.561) + (x<sub>45</sub> +1.836) + (x<sub>46</sub> -8.239) + (x<sub>47</sub> +4.165) + (x<sub>48</sub> -0.434) + (x<sub>49</sub> +5.654) + (x<sub>50</sub> -6.245) + (x<sub>51</sub> -8.889) + (x<sub>52</sub> -2.784) + (x<sub>53</sub> +2.473) + (x<sub>54</sub> +1.843) + (x<sub>55</sub> -4.917) + (x<sub>56</sub> -3.704) + (x<sub>57</sub> +0.405) + (x<sub>58</sub> +5.132) + (x<sub>59</sub> +2.956) + (x<sub>60</sub> -6.344) + (x<sub>61</sub> +8.843) + (x<sub>62</sub> +2.651) + (x<sub>63</sub> -0.127) + (x<sub>64</sub> -5.662) + (x<sub>65</sub> -5.994) + (x<sub>66</sub> -8.043) + (x<sub>67</sub> +1.111) + (x<sub>68</sub> -2.832) + (x<sub>69</sub> -3.571) + (x<sub>70</sub> -5.677) + (x<sub>71</sub> -5.370) + (x<sub>72</sub> -9.045) + (x<sub>73</sub> -0.591) + (x<sub>74</sub> +7.523) + (x<sub>75</sub> -0.441) + (x<sub>76</sub> +4.587) + (x<sub>77</sub> +7.550) + (x<sub>78</sub> -4.303) + (x<sub>79</sub> -6.137) + (x<sub>80</sub> +3.080) + (x<sub>81</sub> +5.412) + (x<sub>82</sub> +9.824) + (x<sub>83</sub> +3.046) + (x<sub>84</sub> +6.025) + (x<sub>85</sub> -2.371) + (x<sub>86</sub> +2.083) + (x<sub>87</sub> -9.011) + (x<sub>88</sub> +4.910) + (x<sub>89</sub> +3.966) + (x<sub>90</sub> -7.329) + (x<sub>91</sub> -6.136) + (x<sub>92</sub> -8.572) + (x<sub>93</sub> -4.568) + (x<sub>94</sub> +8.636) + (x<sub>95</sub> +8.604) + (x<sub>96</sub> +0.157) + (x<sub>97</sub> -9.133) + (x<sub>98</sub> +0.860) + (x<sub>99</sub> +8.441) + (x<sub>100</sub> -4.106) + (x<sub>101</sub> +7.366) + (x<sub>102</sub> -2.493) + (x<sub>103</sub> +9.860) + (x<sub>104</sub> -1.570) + (x<sub>105</sub> -7.574) + 
+                (x<sub>106</sub> -9.881) + (x<sub>107</sub> -2.417) + 
+                (x<sub>108</sub> -4.276) + (x<sub>109</sub> +0.906) + 
+                (x<sub>110</sub> -8.008) + (x<sub>111</sub> +7.272) + 
+                (x<sub>112</sub> -9.818) + (x<sub>113</sub> -4.328) + 
+                (x<sub>114</sub> -2.490) + (x<sub>115</sub> +9.182) + 
+                (x<sub>116</sub> -7.859) + (x<sub>117</sub> +7.229) + 
+                (x<sub>118</sub> +5.884) + (x<sub>119</sub> -9.712) + 
+                (x<sub>120</sub> -0.302) + (x<sub>121</sub> +4.695) + 
+                (x<sub>122</sub> -6.982) + (x<sub>123</sub> -2.770) + 
+                (x<sub>124</sub> +4.645) + (x<sub>125</sub> +8.147) + 
+                (x<sub>126</sub> +1.214) + (x<sub>127</sub> -2.052) = 0 
+            </p>
+            <p>
+                Execution started... wait, please!
+            </p>
+        </div>
+        <p id="jsEOForm">
+            <!-- <a href="./index.html?configure=true">Want to change configuration?</a>-->
+        </p>
+        <p id="jsEOConsole"></p>
+        <p id="jsEOGraphics"></p>
+        <script>
+            setTimeout("main();"+
+                    "alert( 'Execution finished!\\n\\nThanks!' );", 1000);
+        </script>
+    </body>
+</html>

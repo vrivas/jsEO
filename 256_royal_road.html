@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>jsEO Testing: 256 Royal Road Function.</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <!--Including CSS -->
+        <link rel="stylesheet" type="text/css" href="./css/jsEO.css">
+
+        <!-- Including Google's JS API -->
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+        <!-- Including mootools -->
+        <script src="./js/libs/mootools/mootools-core-full-compat.js"></script>
+
+        <!-- Including jsEO core -->
+        <script src="./js/libs/jsEO/core/jsEOUtils.js"></script>
+        <script src="./js/libs/jsEO/core/jsEO.js"></script>
+        <script src="./js/libs/jsEO/core/jsEOIndividual.js"></script>
+        <script src="./js/libs/jsEO/core/jsEOPopulation.js"></script>
+        <script src="./js/libs/jsEO/core/jsEOOperator.js"></script>
+        <script src="./js/libs/jsEO/core/jsEOOperatorsWheel.js"></script>
+        <script src="./js/libs/jsEO/core/jsEOAlgorithm.js"></script>
+
+        <!-- Including type of algorithms -->
+        <script src="./js/libs/jsEO/core/algorithms/jsEOGA.js"></script>
+
+        <!-- Including operator/s to select indviduals for new population -->
+        <script src="./js/libs/jsEO/core/operators/jsEOOpSelectorTournament.js"></script>
+
+        <!-- Including operator/s to synchronize with others islands -->
+        <script src="./js/libs/jsEO/core/operators/jsEOOpSendIndividuals.js"></script>
+        <script src="./js/libs/jsEO/core/operators/jsEOOpGetIndividuals.js"></script>
+
+        <!-- Including jsEOBitString elements -->
+        <script src="./js/libs/jsEO/jsEOBitString/jsEOBSIndividual.js"></script>
+        <script src="./js/libs/jsEO/jsEOBitString/jsEOBSOpMutation.js"></script>
+        <script src="./js/libs/jsEO/jsEOBitString/jsEOBSOpCrossOver.js"></script>
+        <script src="./js/libs/jsEO/jsEOBitString/jsEOBSGA.js"></script>
+
+        <!-- Including main bitstring program -->
+        <script src="./js/samples/256_royal_problem.js"></script>
+    </head>
+    <body>
+        <h1>jsEO testing problem</h1>
+        <div id="jsEODescription">
+            <h2>256 Royal Road function</h2>
+            <h4>By <a href="http://vrivas.es" target="_blank">Victor M. Rivas</a>,
+            from <a href="http://geneura.wordpress.com" target="_blank">Geneura Team</a></h4>
+        
+
+            <p class='english'>Thanks for helping us to test jsEO library.</p>
+            <p class='english'>We are trying to find 256-length bit-strings with 
+                the maximum number of '0000' and/or '1111' sequences. (Global
+                maximum is 253, corresponding to the string composed by only "1s"
+                or only "0s").
+            </p>
+            <p>
+                Execution started... wait, please!
+            </p>
+        </div>
+
+        <p id="jsEOForm">
+            <!-- <a href="./index.html?configure=true">Want to change configuration?</a>-->
+        </p>
+        <p id="jsEOConsole"></p>
+        <p id="jsEOGraphics"></p>
+        <script>
+            setTimeout("main();" +
+                    "alert( 'Excution finished!\\n\\nThanks!' );",
+                    1000);
+        </script>
+    </body>
+</html>
