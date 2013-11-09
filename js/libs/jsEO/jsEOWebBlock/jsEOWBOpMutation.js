@@ -19,19 +19,15 @@
 
 var jsEOWBOpMutation = new Class({
     Extends: jsEOOperator,
-    mutPower: null,
+    genesRate: null,
     min: null,
     max: null,
-    initialize: function(_applicationRate, _mutPower, _min, _max) {
+    initialize: function(_applicationRate, _genesRate) {
         this.parent(_applicationRate);
-        this.mutPower = _mutPower;
-        this.min = _min;
-        this.max = _max;
-        jsEOUtils.debugln("Initializing a jsEOFVMutation " +
+        this.genesRate = _genesRate;
+        jsEOUtils.debugln("Initializing a jsEOWBOpMutation " +
                 " with applicationRate " + this.applicationRate +
-                ", mutPower " + this.mutPower +
-                ", min " + this.min +
-                ", max " + this.max
+                ", genesRate " + this.genesRate 
                 );
 
     },
@@ -43,19 +39,19 @@ var jsEOWBOpMutation = new Class({
         for (var i = 0; i < tmpChr.length; ++i) {
             newChr.push(tmpChr[i]);
         }
-        jsEOUtils.debugln("  Individual is " + tmpChr);
+        jsEOUtils.debugln("  Initial: " + tmpChr);
         for (var i = 0; i < tmpChr.length; ++i) {
             var pos1 = parseInt(Math.random() * tmpChr.length);
             var pos2 = parseInt(Math.random() * tmpChr.length);
 
-            if ((Math.random() < this.bitsRate)) {
+            if ((Math.random() < this.genesRate)) {
                 var tmp = newChr[pos1];
                 newChr[pos1] = newChr[pos2];
-                newChr[pos2] = tmp;
+                newChr[pos2] = tmp;                
             }
         }
-        jsEOUtils.debugln("  Final  " + newChr);
-        toRet.add(new jsEOFVIndividual());
+        jsEOUtils.debugln("  Final: " + newChr);
+        toRet.add(new jsEOWBIndividual());
         toRet.getAt(0).setChromosome(newChr);
         return toRet;
     }

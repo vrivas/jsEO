@@ -19,17 +19,17 @@
 
 var jsEOFVOpMutation = new Class({
     Extends: jsEOOperator,
-    mutPower: null,
+    genesRate: null,
     min: null,
     max: null,
-    initialize: function(_applicationRate, _mutPower, _min, _max) {
+    initialize: function(_applicationRate, _genesRate, _min, _max) {
         this.parent(_applicationRate);
-        this.mutPower = _mutPower;
+        this.genesRate = _genesRate;
         this.min = _min;
         this.max = _max;
         jsEOUtils.debugln("Initializing a jsEOFVMutation " +
                 " with applicationRate " + this.applicationRate +
-                ", mutPower " + this.mutPower +
+                ", genesRate " + this.genesRate +
                 ", min " + this.min +
                 ", max " + this.max
                 );
@@ -42,7 +42,7 @@ var jsEOFVOpMutation = new Class({
         var newChr = new Array();
         jsEOUtils.debugln("  Individual is " + tmpChr);
         for (var i = 0; i < tmpChr.length; ++i) {
-            newChr.push( (Math.random() < this.bitsRate) ? (Math.random()*(this.max-this.min)+this.min) : tmpChr[i]);
+            newChr.push( (Math.random() < this.genesRate) ? (Math.random()*(this.max-this.min)+this.min) : tmpChr[i]);
         }
         jsEOUtils.debugln("  Final  " + newChr);
         toRet.add(new jsEOFVIndividual());

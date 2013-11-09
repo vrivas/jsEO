@@ -69,10 +69,6 @@ var jsEOWBGA = new Class({
                 this.getIndividualsRate + "' size='4'></p>";
         msg += "<p>Number of individuals to show: <input type='text' name='showing' value='" +
                 this.showing + "' size='4'></p>";
-        msg += "<p>Minimum value for genes: <input type='text' name='minValue' value='" +
-                this.minValue + "' size='4'></p>";
-        msg += "<p>Maximum value for genes: <input type='text' name='maxValue' value='" +
-                this.maxValue + "' size='4'></p>";
         msg += "<p><input type='submit' value='Send data'>" +
                 "<input type='reset' value='Reset'></p>";
         msg += "</form>"
@@ -88,10 +84,10 @@ var jsEOWBGA = new Class({
         }
         this.population = new jsEOPopulation();
         for (var i = 0; i < this.popSize; ++i) {
-            var myFV = new jsEOFVIndividual();
-            myFV.randomize(this.indSize, this.minValue, this.maxValue).
+            var myWB = new jsEOWBIndividual();
+            myWB.randomize(this.indSize).
                     evaluate(_fitFn);
-            this.population.addIndividual(myFV);
+            this.population.addIndividual(myWB);
         }
         this.population.sort();
 
@@ -100,12 +96,8 @@ var jsEOWBGA = new Class({
 
         this.operSelector = new jsEOOperatorsWheel();
         this.operSelector.
-                addOperator(new jsEOFVOpCrossOver(this.xOverRate));
-        this.operSelector.
-                addOperator(new jsEOFVOpMutation(this.mutRate,
-                        this.mutPower,
-                        this.minValue,
-                        this.maxValue));
+                addOperator(new jsEOWBOpMutation(this.mutRate,
+                        this.mutPower));
         if( this.opGet ) {
             this.operSelector.addOperator(this.opGet);
         }

@@ -19,13 +19,13 @@
 
 var jsEOBSOpMutation = new Class({
     Extends: jsEOOperator,
-    bitsRate: null,
-    initialize: function(_applicationRate, _bitsRate) {
+    genesRate: null,
+    initialize: function(_applicationRate, _genesRate) {
         this.parent(_applicationRate);
-        this.bitsRate = _bitsRate;
+        this.genesRate = _genesRate;
         jsEOUtils.debugln("Initializing a jsEOBSOpBitFlip with " +
                 "applicationRate " + this.applicationRate +
-                " and bitsRate " + this.bitsRate);
+                " and genesRate " + this.genesRate);
 
     },
     operate: function(_auxPop) {
@@ -35,7 +35,7 @@ var jsEOBSOpMutation = new Class({
         var newChr = "";
         jsEOUtils.debugln("  Individual is " + tmpChr);
         for (var i = 0; i < tmpChr.length; ++i) {
-            newChr += (Math.random() < this.bitsRate) ? ((tmpChr[i] == "0") ? "1" : "0") : tmpChr[i];
+            newChr += (Math.random() < this.genesRate) ? ((tmpChr[i] == "0") ? "1" : "0") : tmpChr[i];
         }
         jsEOUtils.debugln("  Final  " + newChr);
         toRet.add(new jsEOBSIndividual());

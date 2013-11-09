@@ -50,6 +50,8 @@ var jsEOWBIndividual = new Class({
             chr.push( tmpChr[data] );
             tmpChr[data]=tmpChr[--tmpLen];
         }
+          
+     
         this.setChromosome(chr);
         return this;
     },

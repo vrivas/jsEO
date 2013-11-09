@@ -21,11 +21,11 @@ var divGr = new Array();
 var divGA = new Array();
 var numDivs = 50;
 function createDivs() {
-    var w = parseInt(Math.random() * 300) + 100;
+    var w = parseInt(Math.random() * 300) + 20;
     for (var i = 0; i < numDivs; ++i) {
         divGr[i] = new Object;
         divGr[i].w = w;
-        divGr[i].h = parseInt(Math.random() * 300) + 100;
+        divGr[i].h = parseInt(Math.random() * 300) + 20;
         divGr[i].c = "rgb( " + parseInt(Math.random() * 240) + "," +
                 parseInt(Math.random() * 240) + "," +
                 parseInt(Math.random() * 240) + ")";
@@ -89,7 +89,10 @@ function showDivsH(_divs, _label, _divId) {
 }
 
 
-function showDivsV(_divs, _label, _divId) {
+function showDivsV(_divs, _label, _divId, _borderColor, _paint ) {
+    if (!_borderColor) {
+        _borderColor = "#fff";
+    }
     var theDiv = document.getElementById("forSizes");
     var vWidth = document.documentElement.clientWidth;
     var vHeight = document.documentElement.clientHeight;
@@ -97,8 +100,8 @@ function showDivsV(_divs, _label, _divId) {
     var tmpLef = 0;
     var lef = 0;
     for (var i = 0; i < _divs.length && lef + _divs[i].w < vWidth; ++i) {
-        var w = _divs[i].w+5;
-        var h = _divs[i].h+5;
+        var w = _divs[i].w;
+        var h = _divs[i].h;
         var c = _divs[i].c;
         if (top + h > vHeight) {
             top = 0;
@@ -109,12 +112,14 @@ function showDivsV(_divs, _label, _divId) {
             tmpLef = w;
         }
         if (lef + _divs[i].w < vWidth) {
-            theDiv.innerHTML += "<div style='width: " +
-                    w + "px; height: " + h + "px; position: absolute; top: " +
-                    top + "px; left: " + lef + "px;" +
-                    "background-color: " + c + ";" +
-                    "border: 5px solid #fff;" +
-                    "'>" + w + ", " + h + " / " + top + "," + lef + "</div>";
+            if (_paint ) {
+                theDiv.innerHTML += "<div style='width: " +
+                        w + "px; height: " + h + "px; position: absolute; top: " +
+                        top + "px; left: " + lef + "px;" +
+                        "background-color: " + c + ";" +
+                        "border: 5px solid " + _borderColor + ";" +
+                        "'>" + w + ", " + h + " / " + top + "," + lef + "</div>";
+            }
             top += h;
         } else {
             --i;
@@ -126,7 +131,7 @@ function showDivsV(_divs, _label, _divId) {
 }
 
 
-function greedyW() {
+function greedyH() {
     var vWidth = document.documentElement.clientWidth;
     var vHeight = document.documentElement.clientHeight;
     var top = 0;
@@ -151,7 +156,7 @@ function greedyW() {
 
     }
 }
-function greedyH() {
+function greedyV() {
     var theDiv = document.getElementById("forSizes");
     var vWidth = document.documentElement.clientWidth;
     var vHeight = document.documentElement.clientHeight;
@@ -179,49 +184,117 @@ function greedyH() {
 
 }
 
-function fitnessFunction(_chr) {
+function fitnessFunctionV(_chr) {
     if (typeof _chr == 'undefined' || !_chr) {
         return null;
     }
     var toRet = 0;
-    for (var i = 0; i < _chr.length - 3; ++i) {
-        toRet += (_chr.substr(i, 4) == "1111") ? 1 : 0;
-        toRet += (_chr.substr(i, 4) == "0000") ? 1 : 0;
+    var vWidth = document.documentElement.clientWidth;
+    var vHeight = document.documentElement.clientHeight;
+    var _divs = new Array();
+    for (var i = 0; i < _chr.length; ++i) {
+        _divs[i] = divGA[_chr[i]];
     }
-    return toRet;
+    var top = 0;
+    var tmpLef = 0;
+    var lef = 0;
+    for (var i = 0; i < _divs.length && lef + _divs[i].w < vWidth; ++i) {
+        var w = _divs[i].w;
+        var h = _divs[i].h;
+        var c = _divs[i].c;
+        if (top + h > vHeight) {
+            top = 0;
+            lef += tmpLef;
+            tmpLef = 0;
+        }
+        if (w > tmpLef) {
+            tmpLef = w;
+        }
+        if (lef + _divs[i].w < vWidth) {
+            top += h;
+        } else {
+            --i;
+        }
+    }
+
+    return toRet = i;
 }
 
+function fitnessFunctionH(_chr) {
+    if (typeof _chr == 'undefined' || !_chr) {
+        return null;
+    }
+    var toRet = 0;
+    var vWidth = document.documentElement.clientWidth;
+    var vHeight = document.documentElement.clientHeight;
+    var _divs = new Array();
+    for (var i = 0; i < _chr.length; ++i) {
+        _divs[i] = divGA[_chr[i]];
+    }
+    var top = 0;
+    var tmpTop = 0;
+    var lef = 0;
+    for (var i = 0; i < _div.length && top + _divs[i].h < vHeight; ++i) {
+        var w = _divs[i].w;
+        var h = _divs[i].h;
+        var c = _divs[i].c;
+        if (lef + w > vWidth) {
+            lef = 0;
+            top += tmpTop;
+            tmpTop = 0;
+        }
+        if (h > tmpTop) {
+            tmpTop = h;
+        }
+        if (top + _divs[i].h < vHeight) {
+            lef += w;
+        } else {
+            --i;
+        }
+    }
+    return toRet = i;
+}
 
 function main() {
     var verbose = jsEOUtils.getInputParam("verbose", false);
     jsEOUtils.setVerbose(verbose == "true" || verbose == true);
-    
+    //jsEOUtils.setVerbose(true);
+
     jsEOUtils.setProblemId("http://jsEO.vrivas.es/20131030120000WEBBLOCKS");
-     
-     // Initializing algorithm
-     var myWBGA = new jsEOWBGA(new jsEOOpSendIndividuals(), new jsEOOpGetIndividuals());
-     
-     // Stablishing parameters
-     myWBGA.popSize = jsEOUtils.getInputParam("popSize", 500);
-     myWBGA.tournamentSize = jsEOUtils.getInputParam("tournamentSize", 2);
-     myWBGA.xOverRate = jsEOUtils.getInputParam("xOverRate", 10);
-     myWBGA.mutRate = jsEOUtils.getInputParam("mutRate", 10);
-     myWBGA.mutPower = jsEOUtils.getInputParam("mutPower", 0.5);
-     myWBGA.getIndividualsRate = jsEOUtils.getInputParam("getIndividualsRate", 1);
-     myWBGA.numGenerations = jsEOUtils.getInputParam("numGenerations", 50);
-     myWBGA.replaceRate = jsEOUtils.getInputParam("replaceRate", 0.5);
-     myWBGA.showing = jsEOUtils.getInputParam("showing", 3);
-     myWBGA.indSize = jsEOUtils.getInputParam("indSize", 128);
-     
-    
+
+    // Initializing algorithm
+    var myWBGA = new jsEOWBGA();
+
+    // Stablishing parameters
+    myWBGA.popSize = jsEOUtils.getInputParam("popSize", 1000);
+    myWBGA.tournamentSize = jsEOUtils.getInputParam("tournamentSize", 2);
+    myWBGA.mutRate = jsEOUtils.getInputParam("mutRate", 10);
+    myWBGA.mutPower = jsEOUtils.getInputParam("mutPower", 0.5);
+    myWBGA.numGenerations = jsEOUtils.getInputParam("numGenerations", 50);
+    myWBGA.replaceRate = jsEOUtils.getInputParam("replaceRate", 0.5);
+    myWBGA.showing = jsEOUtils.getInputParam("showing", 3);
+    myWBGA.indSize = jsEOUtils.getInputParam("indSize", numDivs);
+
+
     createDivs();
-    showDivsV(divGr, "Original", "forTotal");
-    greedyH();
-    showDivsV(divGr, "greedy H", "forGreedyH");
-    greedyW();
-    showDivsV(divGr, "greedy W", "forGreedyW");
-    
-     // Running algorithm
-     myWBGA.run(fitnessFunction);
-    
+    showDivsV(divGr, "Original", "forTotal", "#fff", false);
+    greedyV();
+    showDivsV(divGr, "greedy V", "forGreedyV", "#fff", false);
+    /*greedyW();
+     showDivsV(divGr, "greedy W", "forGreedyW");
+     */
+
+    //alert("Continuo?");
+
+    // Running algorithm
+    myWBGA.run(fitnessFunctionV);
+    var divGAMostrar = new Array();
+
+
+    for (var i = 0; i < divGA.length; ++i) {
+        divGAMostrar[i] = divGA[myWBGA.population.pop[0].chromosome[i]];
+    }
+    showDivsV(divGAMostrar, "GA", "forGAV", "red", false);
+
+
 }
