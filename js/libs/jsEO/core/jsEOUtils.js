@@ -31,6 +31,7 @@ var jsEOUtils = {
     problemID: null,
     getURL: "http://jseo.vrivas.es/php/sending.php",
     sendURL: "http://jseo.vrivas.es/php/receiving.php",
+    proxyURL: "http://jseo.vrivas.es/php/proxy.php",
     setOutput: function(_id) {
         if (typeof _id != 'undefined') {
             this.idOutput = _id;
@@ -125,6 +126,13 @@ var jsEOUtils = {
     },
     getSendURL: function() {
         return this.sendURL;
+    },
+    setProxyURL: function(_url) {
+        this.proxyURL = _url;
+        return this;
+    },
+    getProxyURL: function() {
+        return this.proxyURL;
     },
     showPop: function(_aPop, _message, _numIndiv) {
         if (typeof _message != 'undefined' && _message) {

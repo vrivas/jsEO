@@ -19,23 +19,42 @@
  */
 var divGr = new Array();
 var divGA = new Array();
-var numDivs = 50;
+var news = new Array();
+var numDivs = 0;
 function createDivs() {
     var w = parseInt(Math.random() * 300) + 20;
-    for (var i = 0; i < numDivs; ++i) {
-        divGr[i] = new Object;
-        divGr[i].w = w;
-        divGr[i].h = parseInt(Math.random() * 300) + 20;
-        divGr[i].c = "rgb( " + parseInt(Math.random() * 240) + "," +
-                parseInt(Math.random() * 240) + "," +
-                parseInt(Math.random() * 240) + ")";
+    var myRequest = new Request({
+        url: jsEOUtils.getProxyURL() + "?rss=http://feeds.bbci.co.uk/news/rss.xml",
+        method: 'get',
+        async: false,
+        onSuccess: function(responseText, XMLDoc) {
+            items = XMLDoc.getElementsByTagName('item');
+            numDivs = items.length;
+            for (var i = 0; i < items.length; ++i) {
+                news[i] = new Object;
+                news[i].title = items[i].getElementsByTagName('title');
+                news[i].content = titulo[0].firstChild.nodeValue;
+            }
+            for (var i = 0; i < numDivs; ++i) {
+                divGr[i] = new Object;
+                divGr[i].w = w;
+                divGr[i].h = parseInt(news[i].title.length*10 )/w*20+
+                        parseInt(news[i].content.length*10 )/w*20;
+                divGr[i].c = "rgb( " + parseInt(Math.random() * 240) + "," +
+                        parseInt(Math.random() * 240) + "," +
+                        parseInt(Math.random() * 240) + ")";
 
-        divGA[i] = new Object;
-        divGA[i].w = divGr[i].w;
-        divGA[i].h = divGr[i].h;
-        divGA[i].c = divGr[i].c;
+                divGA[i] = new Object;
+                divGA[i].w = divGr[i].w;
+                divGA[i].h = divGr[i].h;
+                divGA[i].c = divGr[i].c;
+            }
+        },
+        onFailure: function() {
+        }
+    });
 
-    }
+
 }
 function writeSizes() {
     var theDiv = document.getElementById("forSizes");
@@ -77,7 +96,9 @@ function showDivsH(_divs, _label, _divId) {
                     top + "px; left: " + lef + "px;" +
                     "background-color: " + c + ";" +
                     "border: 5px solid #fff;" +
-                    "'>" + w + ", " + h + " / " + top + "," + lef + "</div>";
+                    "'>" + w + ", " + h + " / " + top + "," + lef + 
+                    "<br/>"+
+                    "</div>";
             lef += w;
         } else {
             --i;
@@ -89,7 +110,7 @@ function showDivsH(_divs, _label, _divId) {
 }
 
 
-function showDivsV(_divs, _label, _divId, _borderColor, _paint ) {
+function showDivsV(_divs, _label, _divId, _borderColor, _paint) {
     if (!_borderColor) {
         _borderColor = "#fff";
     }
@@ -112,13 +133,17 @@ function showDivsV(_divs, _label, _divId, _borderColor, _paint ) {
             tmpLef = w;
         }
         if (lef + _divs[i].w < vWidth) {
-            if (_paint ) {
+            if (_paint) {
                 theDiv.innerHTML += "<div style='width: " +
                         w + "px; height: " + h + "px; position: absolute; top: " +
                         top + "px; left: " + lef + "px;" +
                         "background-color: " + c + ";" +
                         "border: 5px solid " + _borderColor + ";" +
-                        "'>" + w + ", " + h + " / " + top + "," + lef + "</div>";
+                        "'>" + w + ", " + h + " / " + top + "," + lef + 
+                        "<br/>"+
+                        "<h3>"+news[i].title+"</h3>"+
+                        "<p>"+news[i].content+"</p>"+
+                        "</div>";
             }
             top += h;
         } else {
@@ -277,7 +302,7 @@ function main() {
 
 
     createDivs();
-    showDivsV(divGr, "Original", "forTotal", "#fff", false);
+    //showDivsV(divGr, "Original", "forTotal", "#fff", false);
     greedyV();
     showDivsV(divGr, "greedy V", "forGreedyV", "#fff", false);
     /*greedyW();
@@ -287,14 +312,14 @@ function main() {
     //alert("Continuo?");
 
     // Running algorithm
-    myWBGA.run(fitnessFunctionV);
+    //myWBGA.run(fitnessFunctionV);
     var divGAMostrar = new Array();
 
 
     for (var i = 0; i < divGA.length; ++i) {
-        divGAMostrar[i] = divGA[myWBGA.population.pop[0].chromosome[i]];
+        //divGAMostrar[i] = divGA[myWBGA.population.pop[0].chromosome[i]];
     }
-    showDivsV(divGAMostrar, "GA", "forGAV", "red", false);
+    //showDivsV(divGAMostrar, "GA", "forGAV", "red", false);
 
 
 }
