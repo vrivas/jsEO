@@ -20,29 +20,34 @@
 var divGr = new Array();
 var divGA = new Array();
 var news = new Array();
+var colors=new Array( "#00FF00", "#BFFF00", "#FFBF00", "#FF4000", "#FF0000")
 var numDivs = 0;
 function createDivs() {
-    var w = parseInt(Math.random() * 300) + 20;
+    var w = parseInt(Math.random() * 300) + 100;
     var myRequest = new Request({
         url: jsEOUtils.getProxyURL() + "?rss=http://feeds.bbci.co.uk/news/rss.xml",
         method: 'get',
         async: false,
-        onSuccess: function(responseText, XMLDoc) {
-            items = XMLDoc.getElementsByTagName('item');
+        onSuccess: function(responseText, responseXML) {            
+            items = responseXML.getElementsByTagName('item');
+            news=new Array();
             numDivs = items.length;
-            for (var i = 0; i < items.length; ++i) {
+            for (var i = 0; i < numDivs; ++i) {
+                title=
                 news[i] = new Object;
-                news[i].title = items[i].getElementsByTagName('title');
-                news[i].content = titulo[0].firstChild.nodeValue;
+                news[i].title = items[i].getElementsByTagName( "title" )[0].textContent;
+                news[i].content = items[i].getElementsByTagName('description')[0].textContent;
             }
             for (var i = 0; i < numDivs; ++i) {
                 divGr[i] = new Object;
                 divGr[i].w = w;
-                divGr[i].h = parseInt(news[i].title.length*10 )/w*20+
-                        parseInt(news[i].content.length*10 )/w*20;
-                divGr[i].c = "rgb( " + parseInt(Math.random() * 240) + "," +
+                divGr[i].h = parseInt(news[i].title.length * 25 / w) * 25 +
+                        parseInt(news[i].content.length * 15 / w )* 15;
+                /*divGr[i].c = "rgba( " + parseInt(Math.random() * 240) + "," +
                         parseInt(Math.random() * 240) + "," +
-                        parseInt(Math.random() * 240) + ")";
+                        parseInt(Math.random() * 240) + ", 0.5)";
+                */
+                divGr[i].c=colors[parseInt(Math.random()*colors.length )];
 
                 divGA[i] = new Object;
                 divGA[i].w = divGr[i].w;
@@ -51,8 +56,11 @@ function createDivs() {
             }
         },
         onFailure: function() {
+            alert("error ");
         }
     });
+
+    myRequest.send();
 
 
 }
@@ -96,8 +104,8 @@ function showDivsH(_divs, _label, _divId) {
                     top + "px; left: " + lef + "px;" +
                     "background-color: " + c + ";" +
                     "border: 5px solid #fff;" +
-                    "'>" + w + ", " + h + " / " + top + "," + lef + 
-                    "<br/>"+
+                    "'>" + w + ", " + h + " / " + top + "," + lef +
+                    "<br/>" +
                     "</div>";
             lef += w;
         } else {
@@ -138,12 +146,14 @@ function showDivsV(_divs, _label, _divId, _borderColor, _paint) {
                         w + "px; height: " + h + "px; position: absolute; top: " +
                         top + "px; left: " + lef + "px;" +
                         "background-color: " + c + ";" +
-                        "border: 5px solid " + _borderColor + ";" +
-                        "'>" + w + ", " + h + " / " + top + "," + lef + 
-                        "<br/>"+
-                        "<h3>"+news[i].title+"</h3>"+
-                        "<p>"+news[i].content+"</p>"+
+                        "opacity: 1; "+
+                        "border: 5px solid " + _borderColor + ";" +"'>" +
+                        "<h3>" + news[i].title + "</h3>" +
+                        "<p>" + news[i].content + "</p>" +
                         "</div>";
+                    //+ w + ", " + h + " / " + top + "," + lef +
+                        //"<br/>" +
+                    
             }
             top += h;
         } else {
@@ -304,7 +314,7 @@ function main() {
     createDivs();
     //showDivsV(divGr, "Original", "forTotal", "#fff", false);
     greedyV();
-    showDivsV(divGr, "greedy V", "forGreedyV", "#fff", false);
+    showDivsV(divGr, "greedy V", "forGreedyV", "#fff", true);
     /*greedyW();
      showDivsV(divGr, "greedy W", "forGreedyW");
      */
