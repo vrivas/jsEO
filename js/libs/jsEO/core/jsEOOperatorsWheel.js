@@ -34,7 +34,7 @@ var jsEOOperatorsWheel = new Class({
     addOperator: function(_operator) {
         this.operators.push(_operator);
         this.appRateSum += parseFloat( _operator.getApplicationRate() );
-        jsEOUtils.debugln( "Adding a new operator with appRate  "+
+        jsEOUtils.debugln( "Adding to jsEOOperatorsWheel a new operator with appRate  "+
                 _operator.getApplicationRate())
         return this;
     },
@@ -88,7 +88,7 @@ var jsEOOperatorsWheel = new Class({
         var rnd = Math.random() * this.appRateSum;
         var i = 0;
         var tmp = this.operators[i].getApplicationRate();
-        while (i < this.operators.length && tmp < rnd) {
+        while (i < this.operators.length-1 && tmp < rnd) { // Adding -1 as at least 1 operator has to be chosen
             tmp += this.operators[++i].getApplicationRate();
         }
         jsEOUtils.debugln( "Selecting operator "+i+" "+this.appRateSum+" "+

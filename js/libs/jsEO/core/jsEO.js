@@ -21,44 +21,41 @@
 
 
 var jsEO = new Class({
-    fitness:null,
-    initialize: function(){
+    fitness:null
+    , initialize: function(){
         jsEOUtils.debug( "Initializing a jsEO <br/>");
-    },
-    copy: function() {
+    }
+    , copy: function() {
         var toRet=new jsEO();
         toRet.fitness=this.fitness;
         return toRet;
-    },
-    getFitness: function() {
+    }
+    , getFitness: function() {
         return this.fitness;
-    },
-    setFitness: function(_fitness) {
-        return this.fitness=_fitness;
-    },
-    evaluate: function() {
-        this.fitness=null;
+    }
+    , setFitness: function(_fitness) {
+        this.fitness=_fitness;
         return this;
-    },
+    }
     // Less than
-    lt: function( _eo ) {
+    , lt: function( _eo ) {
         return this.fitness<_eo.fitness;
-    },
+    }
     // Equal to
-    eq: function( _eo ) {
+    , eq: function( _eo ) {
        return this.fitness===_eo.fitness; 
-    },
+    }
     // Greater than
-    gt: function( _eo ) {
+    , gt: function( _eo ) {
         return ! (this.lt(_eo) || this.eq( _eo ) );
-    },
+    }
     // Less than or equal to
-    le: function( _eo ) {
-        return (this.lt(_eo) || this.eq( _eo ) );
-    },
+    , le: function( _eo ) {
+        return !this.gt(_eo);
+    }
     // Greater than or equal to
-    ge: function( _eo ) {
-        return (!this.lt(_eo) || this.eq( _eo ) );
+    , ge: function( _eo ) {
+        return !this.lt(_eo);
     }
 });
 

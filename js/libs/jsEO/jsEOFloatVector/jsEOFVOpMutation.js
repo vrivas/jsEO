@@ -39,7 +39,7 @@ var jsEOFVOpMutation = new Class({
         jsEOUtils.debugln("Applying jsEOBSOpBitFlip");
         var toRet = new jsEOPopulation();
         var tmpChr = _auxPop.getAt(0).getChromosome();
-        var newChr = new Array();
+        var newChr = [];
         jsEOUtils.debugln("  Individual is " + tmpChr);
         for (var i = 0; i < tmpChr.length; ++i) {
             newChr.push( (Math.random() < this.genesRate) ? (Math.random()*(this.max-this.min)+this.min) : tmpChr[i]);

@@ -54,7 +54,7 @@ var jsEOGA = new Class({
     getIndividSelector: function( ) {
         return this.indivSelector;
     },
-    privateRun: function(_fitFn, _numGenerations, _showing) {
+    privateRun: function(_fitFn, _fitFnParams, _numGenerations) {
         var popSize = this.population.length();
         this.population.sort();
         jsEOUtils.h2("Starting evolution");
@@ -78,7 +78,7 @@ var jsEOGA = new Class({
                 tmpPop = this.operSelector.
                         operate().
                         operate(tmpPop).
-                        evaluate(_fitFn);
+                        evaluate(_fitFn, _fitFnParams);
                 newPop.setAt(i, tmpPop.getAt(0));
             }
             this.population.join(newPop).sort().crop(popSize);
@@ -94,8 +94,8 @@ var jsEOGA = new Class({
 
         } //for numGenerations
     },
-    run: function() {
-        this.privateRun();
+    run: function(_fitFn, _fitFnParams, _numGenerations) {
+        this.privateRun(_fitFn, _fitFnParams, _numGenerations);
     }
 });
 
