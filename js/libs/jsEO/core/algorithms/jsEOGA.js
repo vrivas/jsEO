@@ -57,19 +57,19 @@ var jsEOGA = new Class({
     privateRun: function(_fitFn, _fitFnParams, _numGenerations) {
         var popSize = this.population.length();
         this.population.sort();
-        jsEOUtils.h2("Starting evolution");
-        jsEOUtils.print("Generation number: <span id='genNum'>0</span>");
+        //jsEOUtils.h2("Starting evolution");
+        //jsEOUtils.print("Generation number: <span id='genNum'>0</span>");
         //jsEOUtils.print(" Best fitness: <span id='bestFit'>0</span>");
-        jsEOUtils.print(" Average fitness: <span id='aveFit'>" +
-                jsEOUtils.averageFitness(this.population) + "</span>");
+        //jsEOUtils.print(" Average fitness: <span id='aveFit'>" +
+        //        jsEOUtils.averageFitness(this.population) + "</span>");
         var bestFit = parseFloat(jsEOUtils.averageFitness(this.population).toFixed(5)) + 1;
         var averFit = parseFloat(jsEOUtils.averageFitness(this.population).toFixed(5));
         for (var j = 0; (j < _numGenerations); ++j) {
-            jsEOUtils.replace(j, "genNum");
+            //jsEOUtils.replace(j, "genNum");
             //jsEOUtils.replace(bestFit, "bestFit");
-            jsEOUtils.replace(
-                    parseFloat(jsEOUtils.averageFitness(this.population).toFixed(5)),
-                    "aveFit");
+            //jsEOUtils.replace(
+            //        parseFloat(jsEOUtils.averageFitness(this.population).toFixed(5)),
+            //        "aveFit");
 
             var newPop = this.indivSelector.operate(this.population);
             for (var i = 0; i < newPop.length(); ++i) {
