@@ -314,7 +314,15 @@ var jsEOUtils = {
                 }
             ]
         };
-        var myLineChart = new Chart(ctx).Line(data);
+        var myLineChart = new Chart(ctx).Line(data
+         {
+                pointDot: false
+                , scaleSteps: 10
+                , scaleShowLabels: true
+                , responsive: true
+                , animation: false
+         }
+        );
         return this;
     }
 
