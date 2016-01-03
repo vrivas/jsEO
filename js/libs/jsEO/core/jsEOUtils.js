@@ -315,7 +315,7 @@ var jsEOUtils = {
             ]
         };
         var myLineChart = new Chart(ctx).Line(data
-         {
+         , {
                 pointDot: false
                 , scaleSteps: 10
                 , scaleShowLabels: true
